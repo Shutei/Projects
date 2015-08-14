@@ -1,10 +1,10 @@
 #initial setup
 import tweepy, time, sys, json
 
-key = 'hk28iR2vdOmpLLdOKzKGR69g3'
-secret = 'NZTOXtZIzH5v2idzJyaE6bpptJtme30zf2ypBaCOldfC8Wluza'
-token = '3314638471-fTScfbeQiXWwwP5HEUip7fyN9d40pHvN5rjAzuG'
-token_secret = 'pfM0lWbvQGX5MUjruyUj3pUgb2TbmHfs8UIQZAhTJYoPe'
+key = 'zIZBfKC4UVvHiDzYBZGwqBmRD'
+secret = 'oGIw5qsv5HINfWJzms42XLBG6TC0XcEvvQcEdBlyuaJIZfH8Kj'
+token = '3314638471-TFSEhmAuIvzdAVaFQ06jrbRaCU9McnyA1ULXJxO'
+token_secret = 'FcrqeSxBppGBqlWp8gnlgR5zMSbboP0djVgRn3WEomQad'
 auth = tweepy.OAuthHandler(key, secret)
 auth.set_access_token(token, token_secret)
 api = tweepy.API(auth)
@@ -16,11 +16,12 @@ x = 1
 while x == 1:
 	results = api.search(q="retweet to win")
 	for result in results:
-		time.sleep(2)
+		time.sleep(20)
 		try:
 			api.retweet(result._json['entities']['media'][(0)]['source_status_id'])
+			print result.text
 			print 'success! sleeping'
-			for x in range(0, 30):
+			for x in range(0, 50):
 				time.sleep(1)
 				print x
 			user_id.follow()
