@@ -1,0 +1,40 @@
+import time
+import tweepy
+import json
+from tweepy import Stream
+from tweepy import OAuthHandler
+from tweepy.streaming import StreamListener
+import os
+
+key = 'NbYA7Zph5zxDSs3GbqAjH3XHB'
+secret = '2fyxYvKXkMOwSUNhi4bLxI6C8QxeWBQI4GK68w8VW6JxMlBr2i'
+token = '3314638471-RLy4ro6v9eGDRlVDJLPyYz8oxwZG51Xu6axmx7l'
+token_secret = 'UaPR3t9Ar8knC5Ijr7dZj8MUQZBp3FZlF3TaKVUFMzvv6'
+auth = tweepy.OAuthHandler(key, secret)
+auth.set_access_token(token, token_secret)
+api = tweepy.API(auth)
+
+class StdOutListener(tweepy.StreamListener):
+    def on_data(self, data):
+        # Twitter returns data in JSON format - we need to decode it first
+        decoded = json.loads(data)
+        # Also, we convert UTF-8 to ASCII ignoring all bad characters sent by users
+        print '@%s: %s' % (decoded['user']['screen_name'], decoded['text'].encode('ascii', 'ignore'))
+        print ''
+        return True
+
+    def on_error(self, status):
+        print status
+
+    
+
+    def on_status(self, status):
+    	if '' in status.text.lower() and 'RT @' not in status and include_rts == False:
+        	print status.text
+        	print status.coordinates
+
+    # There are different kinds of streams: public stream, user stream, multi-user streams
+    # In this example follow #programming tag
+    # For more details refer to https://dev.twitter.com/docs/streaming-apis
+stream = tweepy.Stream(auth, StdOutListener)
+stream.filter(track=['retweet win'])
