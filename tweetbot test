@@ -19,13 +19,13 @@ class StdOutListener(tweepy.StreamListener):
         # Twitter returns data in JSON format - we need to decode it first
         decoded = json.loads(data)
         try:
-            if not decoded['text'].startswith('RT') and not ": RT" in decoded['text'] and not "quoted_status_id" in decoded and not decoded['text'].startswith('@') and not decoded['user']['screen_name'] == (malinfanworld or jasondh153 or twittesty or KSHP_DB or ptn2pnh):
+            if not decoded['text'].startswith('RT') and not ": RT" in decoded['text'] and not "quoted_status_id" in decoded and not decoded['text'].startswith('@') and :
             # Also, we convert UTF-8 to ASCII ignoring all bad characters sent by users
                 print '@%s: %s' % (decoded['user']['screen_name'], decoded['text'].encode('ascii', 'ignore'))
                 print ''
                 print decoded
                 api.retweet(decoded['id'])
-                api.create_friendship(decoded['user']['id'])
+                api.create_friendship(decoded['entities']['user']['id'])
             return True
         except:
             print "unicode"
@@ -33,19 +33,14 @@ class StdOutListener(tweepy.StreamListener):
     def on_error(self, status):
         print status
 
-
-try:
-
-    if __name__ == '__main__':
-        l = StdOutListener()
-        auth = tweepy.OAuthHandler(key, secret)
-        auth.set_access_token(token, token_secret)
-        print "Showing all new tweets for retweet win:"
+if __name__ == '__main__':
+    l = StdOutListener()
+    auth = tweepy.OAuthHandler(key, secret)
+    auth.set_access_token(token, token_secret)
+    print "Showing all new tweets for retweet win:"
 
     # There are different kinds of streams: public stream, user stream, multi-user streams
     # In this example follow #programming tag
     # For more details refer to https://dev.twitter.com/docs/streaming-apis
-        stream = tweepy.Stream(auth, l)
-        stream.filter(track=['retweet win'])
-except KeyboardInterrupt:
-    sys.exit()
+    stream = tweepy.Stream(auth, l)
+    stream.filter(track=['retweet win'])

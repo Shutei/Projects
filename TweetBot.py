@@ -16,8 +16,8 @@ api = tweepy.API(auth)
 #API.update_status(status = "Beep Boop")
 
 rRetweeted = [] #list of already retweeted ids
-x = 1    #make this 0 when you want to stop the code
-c = 500    #how many iterations
+x = 0    #make this 0 when you want to stop the code
+c = 10    #how many iterations
 
 for count in range(0, c):
 	results = api.search(q="retweet win", count=1)
